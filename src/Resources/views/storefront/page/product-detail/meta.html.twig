@@ -1,0 +1,49 @@
+{% sw_extends '@Storefront/storefront/layout/meta.html.twig' %}
+
+{# OpenGraph Meta Tags #}
+{% block layout_head_meta_tags_opengraph %}
+    {{ parent() }}
+
+    <!-- Additional OpenGraph Meta Tags -->
+    <meta property="og:availability" content="{% if page.product.available %}instock{% else %}outofstock{% endif %}">
+    <meta property="og:rating" content="{{ page.product.ratingAverage | default(0) }}">
+    <meta property="og:review_count" content="{{ page.product.reviewCount | default(0) }}">
+
+    <!-- Custom Twitter Meta Tags -->
+    <meta name="twitter:creator" content="@YourTwitterHandle">
+{% endblock %}
+
+{# Title Tag with Custom Source #}
+{% block layout_head_title_inner %}
+    {% if page.extensions['salesChannelContents'][0] is defined and page.extensions['salesChannelContents'][0].metaTitle is not empty %}
+        {{ page.extensions['salesChannelContents'][0].metaTitle }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Canonical URL Fix #}
+{% block layout_head_canonical %}
+    {% set canonicalUrl = page.product.id %}
+
+    {% if page.product.canonicalProductId %}
+        {% set canonicalUrl = page.product.canonicalProductId %}
+    {% endif %}
+
+    <link rel="canonical" href="{{ seoUrl('frontend.detail.page', { productId: canonicalUrl }) }}">
+
+    <!-- Alternate Language Versions -->
+    <link rel="alternate" hreflang="en" href="{{ seoUrl('frontend.detail.page', { productId: page.product.id, _locale: 'en' }) }}">
+    <link rel="alternate" hreflang="de" href="{{ seoUrl('frontend.detail.page', { productId: page.product.id, _locale: 'de' }) }}">
+{% endblock %}
+
+{# Robots Meta Tag Fix #}
+{% block layout_head_meta_robots %}
+    <meta name="robots" content="index, follow">
+{% endblock %}
+
+{# Author & Publisher Meta Tags #}
+{% block layout_head_meta_author %}
+    <meta name="author" content="{{ config('core.basicInformation.shopName') }}">
+    <meta name="publisher" content="{{ config('core.basicInformation.shopName') }}">
+{% endblock %}

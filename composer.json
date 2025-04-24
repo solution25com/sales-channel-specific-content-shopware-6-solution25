@@ -1,0 +1,23 @@
+{
+  "name": "solution25/sales-channel-specific-content",
+  "version": "1.0.4",
+  "description": "Custom plugin for per sales channel product data.",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "shopware/core": "~6.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "SalesChannelSpecificContent\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "SalesChannelSpecificContent\\SalesChannelSpecificContent",
+    "label": {
+      "en-GB": "Sales Channel Specific Content",
+      "de-DE": "Sales Channel Specific Content"
+    }
+  }
+}

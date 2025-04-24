@@ -1,0 +1,147 @@
+<sw-card title="Select Sales Channel">
+    <template #default>
+        <sw-entity-single-select
+            v-model:value="selectedSalesChannel"
+            entity="sales_channel"
+            label="Select Sales Channel"
+            placeholder="Choose a sales channel..."
+            :criteria="criteria"
+            :repository="salesChannelRepository"
+            valueProperty="id"
+            labelProperty="name"
+            allow-clearable
+            @change="onSalesChannelChange"
+        />
+    </template>
+</sw-card>
+
+<sw-card title="Long Description">
+    <template #default>
+        <sw-text-editor 
+            label="Long Description" 
+            v-model:value="salesChannelSpecificContent.longDescription" 
+            :enablehtml="true"
+            :sanitize-input="false"
+            >
+        </sw-text-editor>
+        <sw-text-editor 
+            label="Short Description" 
+            v-model:value="salesChannelSpecificContent.shortDescription" 
+            placeholder="Enter short description">
+        </sw-text-editor>
+    </template>
+</sw-card>
+
+<sw-card title="Product Details">
+    <template #default>
+        <sw-container columns="2">
+            <sw-text-field 
+                label="Product Name" 
+                v-model:value="salesChannelSpecificContent.productName" 
+                placeholder="Enter product name"
+            />
+
+            <sw-text-field 
+                label="Product URL" 
+                v-model:value="salesChannelSpecificContent.productUrl" 
+                placeholder="Enter product URL"
+            />
+        </sw-container>
+    </template>
+</sw-card>
+
+<sw-card title="SEO Information">
+    <template #default>
+        <sw-container columns="2">
+            <sw-text-field 
+                label="SEO Title" 
+                v-model:value="salesChannelSpecificContent.metaTitle" 
+                placeholder="Enter meta title"
+            />
+
+            <sw-text-field 
+                label="SEO Keywords" 
+                v-model:value="salesChannelSpecificContent.metaKeywords" 
+                placeholder="Enter meta keywords"
+            />
+            <sw-text-editor 
+                label="SEO Description" 
+                v-model:value="salesChannelSpecificContent.metaDescription" 
+                :enablehtml="true"
+                />
+        </sw-container>
+    </template>
+</sw-card>
+
+        <sw-card title="Additional Information">
+            <template #default>
+                <sw-text-editor 
+                    label="What's Included" 
+                    v-model:value="salesChannelSpecificContent.whatsIncluded" 
+                    placeholder="List included items"
+                    :enablehtml="true"
+                    :sanitize-input="false"
+                >
+                </sw-text-editor>
+
+                <sw-text-editor 
+                    v-model:value="salesChannelSpecificContent.productFeatures" 
+                    label="Product Features"
+                    placeholder="Add product features...">
+                </sw-text-editor>
+            </template>
+        </sw-card>
+        <sw-card title="wholesale & retail Price's">
+            <template #default>
+                <sw-number-field
+                        v-model:value="salesChannelSpecificContent.wholesalePrice"
+                        label="Wholesale Price"
+                        :min="0.01"
+                        step="0.01"
+                    />
+
+                    <sw-number-field
+                        v-model:value="salesChannelSpecificContent.retailPrice"
+                        label="Retail Price"
+                        :min="0.01"
+                        step="0.01"
+                    />
+            </template>
+        </sw-card>
+{# <sw-card title="Media">
+    <template #default>
+        <sw-media-field 
+            label="Cover Image" 
+            v-model:value="salesChannelSpecificContent.coverImageId">
+        </sw-media-field>
+
+        <sw-container columns="2fr auto">
+ 	 <sw-media-upload-v2
+            v-model="salesChannelImages"
+            label="Upload Images"
+            :variant="'regular'"
+            :allow-multi-select="true"
+            :media-items.sync="salesChannelImages"
+        />
+
+          <sw-media-modal-v2
+            v-if="showMediaModal"
+            :initial-folder-id="mediaDefaultFolderId"
+            :entity-context="product.getEntityName()"
+            @media-modal-selection-change="onAddMedia"
+            @modal-close="onCloseMediaModal"
+        />
+        </sw-container>
+    </template>
+</sw-card> #}
+
+<sw-card title="Actions">
+    <template #footer>
+        <sw-button 
+            variant="primary" 
+            :isloading="isLoading" 
+            @click="saveSalesChannelContent">
+            Save
+        </sw-button>
+    </template>
+</sw-card>
