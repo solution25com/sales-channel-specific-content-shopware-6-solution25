@@ -1,0 +1,1 @@
+# sales-channel-specific-content-shopware-6-solution25
