@@ -13,11 +13,30 @@
       "SalesChannelSpecificContent\\": "src/"
     }
   },
+  "authors": [
+    {
+      "name": "solution25",
+      "email": "info@solution25.com",
+      "homepage": "https://solution25.com/"
+    }
+  ],
   "extra": {
     "shopware-plugin-class": "SalesChannelSpecificContent\\SalesChannelSpecificContent",
     "label": {
       "en-GB": "Sales Channel Specific Content",
       "de-DE": "Sales Channel Specific Content"
+    },
+    "description": {
+      "en-GB": "Plugin for defining product content per sales channel in Shopware.",
+      "de-DE": "Plugin zur Definition von produktspezifischen Inhalten je Verkaufskanal in Shopware."
+    },
+    "manufacturerLink": {
+      "en-GB": "https://solution25.com/en/home_en/",
+      "de-DE": "https://solution25.com/"
+    },
+    "supportLink": {
+      "en-GB": "https://solution25.com/en/home_en/",
+      "de-DE": "https://solution25.com/"
     }
   }
 }
