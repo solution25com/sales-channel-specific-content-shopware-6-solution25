@@ -12,28 +12,15 @@ on:
 jobs:
   verify-plugin:
     name: Verify Shopware Plugin
-    runs-on: ubuntu-latest  
-
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         version-selection: ['lowest', 'highest']
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'  
-          tools: composer:v2
-
-      - name: Allow Symfony Runtime Plugin
-        run: composer config --no-plugins allow-plugins.symfony/runtime true
-        
-      - name: Install PHP dependencies
-        run: composer install --no-interaction --prefer-dist
 
       - name: Run Shopware Extension Verifier
         id: verifier
@@ -46,11 +33,11 @@ jobs:
         if: failure() && steps.verifier.outcome == 'failure'
         run: |
           echo "❌ Shopware Extension Verifier detected issues. Please review and fix them."
-          echo "### ❌ Shopware Extension Verifier Failed – Errors were found" >> $GITHUB_STEP_SUMMARY
+          echo "### ❌ Shopware Extension Verifier Failed (${matrix.version-selection})" >> $GITHUB_STEP_SUMMARY
           exit 1
 
       - name: ✅ Extension Verifier Passed – No errors found
         if: success() && steps.verifier.outcome == 'success'
         run: |
           echo "✅ Shopware Extension Verifier ran successfully. No issues found!"
-          echo "### ✅ Shopware Extension Verifier Passed" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Shopware Extension Verifier Passed (${matrix.version-selection})" >> $GITHUB_STEP_SUMMARY
