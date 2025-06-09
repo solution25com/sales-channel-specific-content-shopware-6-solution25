@@ -12,27 +12,21 @@
 
         <service
                 id="SalesChannelSpecificContent\Core\Content\ImagesForSalesChannel\ImagesForSalesChannelDefinition">
-            <tag name="shopware.entity.definition" entity="content_for_sales_channel"/>
+            <tag name="shopware.entity.definition" entity="images_for_sales_channel"/>
         </service>
         <service id="SalesChannelSpecificContent\Extension\Content\Product\ContentForSalesChannelExtension">
             <tag name="shopware.entity.extension"/>
         </service>
 
-        <service id="SalesChannelSpecificContent\Extension\Content\Product\ImagesForSalesChannelExtension">
-            <tag name="shopware.entity.extension"/>
-        </service>
-
-        <service id="SalesChannelSpecificContent\Controller\SalesChannelContentController"
-                 public="true">
-            <argument type="service" id="sales_channel_specific_content.repository" />
-            <argument type="service" id="sales_channel_specific_images.repository" />
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
-        </service>
         <service id="SalesChannelSpecificContent\Subscriber\ProductSalesChannelContentSubscriber">
             <argument type="service" id="sales_channel_specific_content.repository"/>
             <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="SalesChannelSpecificContent\Decorator\ProductDetailRouteDecorator" decorates="Shopware\Core\Content\Product\SalesChannel\Detail\ProductDetailRoute">
+            <argument type="service" id="SalesChannelSpecificContent\Decorator\ProductDetailRouteDecorator.inner"/>
+            <argument type="service" id="sales_channel_specific_content.repository"/>
+            <tag name="shopware.sales_channel.route"/>
         </service>
     </services>
 </container>

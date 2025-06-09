@@ -33,8 +33,11 @@
     <link rel="canonical" href="{{ seoUrl('frontend.detail.page', { productId: canonicalUrl }) }}">
 
     <!-- Alternate Language Versions -->
-    <link rel="alternate" hreflang="en" href="{{ seoUrl('frontend.detail.page', { productId: page.product.id, _locale: 'en' }) }}">
-    <link rel="alternate" hreflang="de" href="{{ seoUrl('frontend.detail.page', { productId: page.product.id, _locale: 'de' }) }}">
+    {% for language in context.availableLanguages %}
+        <link rel="alternate"
+              hreflang="{{ language.translationCode.code|lower }}"
+              href="{{ seoUrl('frontend.detail.page', { productId: page.product.id, _locale: language.translationCode.code }) }}">
+    {% endfor %}
 {% endblock %}
 
 {# Robots Meta Tag Fix #}
