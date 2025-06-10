@@ -1,6 +1,6 @@
 {
   "name": "solution25/sales-channel-specific-content",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Custom plugin for per sales channel product data.",
   "type": "shopware-platform-plugin",
   "license": "MIT",
