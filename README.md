@@ -48,6 +48,147 @@ Alternatively, you can upload it via the admin panel if you clone/download it ma
 
 Each field will be saved **only for the selected sales channel**.
 
+
+# MultiChannel Content Plugin - API Documentation
+ 
+This documentation describes the custom Admin API endpoints provided by the **MultiChannel Content Plugin** for Shopware 6.  
+This plugin allows administrators and backend services to manage product-specific content for individual sales channels.  
+It supports **fetching**, **saving**, and **deleting** customized content and related images per sales channel.
+ 
+---
+ 
+## Get Sales Channel Specific Content
+ 
+**Endpoint**  
+`GET /api/product/sales-channel-content/{id}`
+ 
+**Description**  
+Fetches all sales channel-specific content and associated images for a given product.
+ 
+**Request Headers**
+```
+Authorization: Bearer <your-access-token>  
+Content-Type: application/json
+```
+ 
+**Example Request**
+```
+GET /api/product/sales-channel-content/5b6a139e54e54ed7b7997c71f6f56f9e
+```
+ 
+**Successful Response**
+```json
+{
+  "status": "success",
+  "message": "Sales Channel Specific Content and Images fetched successfully",
+  "data": [ /* List of content objects with images */ ]
+}
+```
+ 
+---
+ 
+## Save/Update Sales Channel Specific Content
+ 
+**Endpoint**  
+`POST /api/product/sales-channel-content/{id}`
+ 
+**Description**  
+Saves or updates sales channel-specific content and images for the given product.
+ 
+**Request Headers**
+```
+Authorization: Bearer <your-access-token>  
+Content-Type: application/json
+```
+ 
+**Example Request Body**
+```json
+{
+  "extensions": {
+    "salesChannelSpecificContent": [
+      {
+        "id": "optional-content-id",
+        "salesChannelId": "sales-channel-id",
+        "longDescription": "Long description text",
+        "metaDescription": "Meta description text",
+        "metaKeywords": "keywords",
+        "metaTitle": "Title",
+        "shortDescription": "Short description",
+        "productName": "Product name",
+        "productFeatures": "Features",
+        "whatsIncluded": "Included items",
+        "coverImageId": "media-id",
+        "wholesalePrice": 10.00,
+        "retailPrice": 20.00
+      }
+    ],
+    "salesChannelSpecificImages": [
+      {
+        "SalesChannelContentId": "content-id",
+        "mediaId": "media-id",
+        "position": 1
+      }
+    ]
+  }
+}
+```
+ 
+**Successful Response**
+```json
+{
+  "message": "Sales Channel Specific Content and Images saved successfully"
+}
+```
+ 
+**Error Response**
+```json
+{
+  "error": "Invalid data format"
+}
+```
+ 
+---
+ 
+## Delete Sales Channel Specific Content
+ 
+**Endpoint**  
+`DELETE /api/product/sales-channel-content/{SalesChannelContentId}`
+ 
+**Description**  
+Deletes the sales channel-specific content and all related images for the provided SalesChannelContent ID.
+ 
+**Request Headers**
+```
+Authorization: Bearer <your-access-token>  
+Content-Type: application/json
+```
+ 
+**Example Request**
+```
+DELETE /api/product/sales-channel-content/73f5a9c62d4a4c56aa11cf48d323e0bc
+```
+ 
+**Successful Response**
+```json
+{
+  "message": "Sales Channel Specific Content and Images deleted successfully"
+}
+```
+ 
+**Error Response**
+```json
+{
+  "error": "Content not found"
+}
+```
+ 
+---
+ 
+## Authentication
+ 
+All endpoints require a valid Admin API **Bearer token**.  
+You can obtain this via the standard [Shopware Admin API authentication process](https://developer.shopware.com/docs/resources/api-guide/admin-api/authentication.html).
+
 ## 🧑‍💻 Authors
 
 Developed and maintained by [Solution25](https://github.com/solution25com)
