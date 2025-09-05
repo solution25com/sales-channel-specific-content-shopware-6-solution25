@@ -16,9 +16,6 @@ This plugin allows you to define **sales channel specific content** for each pro
 
 > These fields are configurable individually for each sales channel you select.
 
-## Compatibility
-- ✅ Shopware 6.4.x, 6.5.x, 6.6.x
-
 ## 📦 Installation
 
 Install via composer:
@@ -40,6 +37,7 @@ Alternatively, you can upload it via the admin panel if you clone/download it ma
 
 - Shopware 6.4+
 - Tested up to Shopware 6.6
+- ✅ Shopware 6.4.x, 6.5.x, 6.6.x
 
 ## 🔧 Configuration
 
