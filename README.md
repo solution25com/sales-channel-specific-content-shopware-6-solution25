@@ -30,8 +30,7 @@ The `Content` tab currently supports these fields:
 | SEO Keywords | Alternative SEO keywords. | Stored and mapped to product translated metadata. |
 | SEO Description | Alternative SEO description. | Applied to product metadata behavior. |
 
-<img width="517" height="758" alt="Screenshot 2026-04-20 at 10 49 39" src="https://github.com/user-attachments/assets/4e498aec-573a-4ecd-956a-daac981954fd" />
-
+<img width="517" height="758" alt="salesChContext" src="https://github.com/user-attachments/assets/b464cb0c-46c1-4432-95df-9c1b1e4cda2a" />
 
 ## Administration Usage
 
