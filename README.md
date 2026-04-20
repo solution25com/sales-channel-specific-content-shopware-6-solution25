@@ -1,199 +1,87 @@
 # Sales Channel Specific Content for Shopware 6
 
-This plugin allows you to define **sales channel specific content** for each product in your Shopware 6 store. It adds a new **"Content" tab** on the product detail page within the Shopware administration panel. From this tab, you can configure how product details (descriptions, SEO data, features, etc.) appear per sales channel.
+`Sales Channel Specific Content` is a Shopware 6 plugin that allows product content to be customized per sales channel.
 
-## 🛠 Features
+The plugin adds a custom `Content` tab to the product detail page in the Shopware Administration. From that tab, shop managers can select a sales channel and maintain alternative product content for that specific channel. On the storefront, the plugin loads the matching record for the current sales channel and applies the configured product data.
 
-- Adds a **Content** tab in the product detail admin view.
-- Enables different product data for each **Sales Channel**.
-- Editable content includes:
-    - Product name & URL
-    - Long & short description
-    - SEO title, keywords, and description
-    - What’s included
-    - Product features
-    - Wholesale & retail prices
+## Features
 
-> These fields are configurable individually for each sales channel you select.
+- Adds a `Content` tab to the Shopware product detail administration view.
+- Stores custom product content per product and sales channel.
+- Replaces selected product fields on storefront product pages when sales-channel-specific content exists.
+- Supports HTML content for rich descriptions and additional information.
+- Adds custom long description, product features, and "What's included" content to the storefront product description tab.
+- Supports sales-channel-specific SEO fields.
+- Keeps default Shopware product content as fallback when no custom content exists for the active sales channel.
 
-## 📦 Installation
+## Editable Fields
 
-Install via composer:
+The `Content` tab currently supports these fields:
+
+| Field | Purpose | Storefront behavior |
+| --- | --- | --- |
+| Sales Channel | Selects which sales channel the content belongs to. | Used to decide which custom content record applies. |
+| Product Name | Alternative product name for the selected sales channel. | Replaces the product name on the storefront for that sales channel. |
+| Short Description | Alternative short/default product description. | Replaces Shopware's normal product description text. |
+| Long Description | Extra detailed description for the selected sales channel. | Rendered below the normal description in the product description tab. |
+| Product Features | Feature content for the selected sales channel. | Rendered below the long description. |
+| What's Included | Included-items content for the selected sales channel. | Rendered below product features. |
+| SEO Title | Alternative SEO title. | Applied to product metadata/title behavior. |
+| SEO Keywords | Alternative SEO keywords. | Stored and mapped to product translated metadata. |
+| SEO Description | Alternative SEO description. | Applied to product metadata behavior. |
+
+<img width="517" height="758" alt="Screenshot 2026-04-20 at 10 49 39" src="https://github.com/user-attachments/assets/4e498aec-573a-4ecd-956a-daac981954fd" />
+
+
+## Administration Usage
+
+1. Go to `Catalogues > Products`.
+2. Open the product you want to customize.
+3. Open the `Content` tab.
+4. Select the target sales channel.
+5. Enter the content for that product and sales channel.
+6. Click `Save`.
+7. Open the product in the selected storefront sales channel to verify the result.
+
+Each saved record belongs to one product and one sales channel. Changing the selected sales channel in the tab loads a different record.
+
+<img width="1468" height="758" alt="Screenshot 2026-04-20 at 10 47 10" src="https://github.com/user-attachments/assets/f847c326-6676-4962-acce-f038a67442f4" />
+
+---
+
+<img width="1468" height="758" alt="Screenshot 2026-04-17 at 17 01 30" src="https://github.com/user-attachments/assets/5405d830-260b-4626-9ad7-e9e4786e99e6" />
+
+
+## Installation
+
+Install the plugin package with Composer:
 
 ```bash
 composer require solution25/sales-channel-specific-content
 ```
 
-Then install & activate the plugin via CLI:
+
+## Troubleshooting
+
+### The `Content` tab is not visible
+
+Run:
 
 ```bash
-bin/console plugin:install --activate SalesChannelSpecificContentShopware6
+bin/console plugin:refresh
+bin/console plugin:install --activate SalesChannelSpecificContent
+bin/build-administration.sh
 bin/console cache:clear
 ```
 
-Alternatively, you can upload it via the admin panel if you clone/download it manually.
+## Compatibility
 
-## ✅ Compatibility
+- Shopware 6.4, 6.5, 6.6, 6.7
 
-- Shopware 6.4+
-- Tested up to Shopware 6.6
-- ✅ Shopware 6.4.x, 6.5.x, 6.6.x
+## Author
 
-## 🔧 Configuration
+Developed and maintained by [solution25](https://solution25.com/).
 
-1. Go to **Catalogues > Products** in the admin panel.
-2. Open a product and navigate to the **Content** tab.
-3. Choose the sales channel from the dropdown.
-4. Fill in or override product data fields as needed.
-5. Click **Save**.
-
-Each field will be saved **only for the selected sales channel**.
-
-
-# MultiChannel Content Plugin - API Documentation
- 
-This documentation describes the custom Admin API endpoints provided by the **MultiChannel Content Plugin** for Shopware 6.  
-This plugin allows administrators and backend services to manage product-specific content for individual sales channels.  
-It supports **fetching**, **saving**, and **deleting** customized content and related images per sales channel.
- 
----
- 
-## Get Sales Channel Specific Content
- 
-**Endpoint**  
-`GET /api/product/sales-channel-content/{id}`
- 
-**Description**  
-Fetches all sales channel-specific content and associated images for a given product.
- 
-**Request Headers**
-```
-Authorization: Bearer <your-access-token>  
-Content-Type: application/json
-```
- 
-**Example Request**
-```
-GET /api/product/sales-channel-content/5b6a139e54e54ed7b7997c71f6f56f9e
-```
- 
-**Successful Response**
-```json
-{
-  "status": "success",
-  "message": "Sales Channel Specific Content and Images fetched successfully",
-  "data": [ /* List of content objects with images */ ]
-}
-```
- 
----
- 
-## Save/Update Sales Channel Specific Content
- 
-**Endpoint**  
-`POST /api/product/sales-channel-content/{id}`
- 
-**Description**  
-Saves or updates sales channel-specific content and images for the given product.
- 
-**Request Headers**
-```
-Authorization: Bearer <your-access-token>  
-Content-Type: application/json
-```
- 
-**Example Request Body**
-```json
-{
-  "extensions": {
-    "salesChannelSpecificContent": [
-      {
-        "id": "optional-content-id",
-        "salesChannelId": "sales-channel-id",
-        "longDescription": "Long description text",
-        "metaDescription": "Meta description text",
-        "metaKeywords": "keywords",
-        "metaTitle": "Title",
-        "shortDescription": "Short description",
-        "productName": "Product name",
-        "productFeatures": "Features",
-        "whatsIncluded": "Included items",
-        "coverImageId": "media-id",
-        "wholesalePrice": 10.00,
-        "retailPrice": 20.00
-      }
-    ],
-    "salesChannelSpecificImages": [
-      {
-        "SalesChannelContentId": "content-id",
-        "mediaId": "media-id",
-        "position": 1
-      }
-    ]
-  }
-}
-```
- 
-**Successful Response**
-```json
-{
-  "message": "Sales Channel Specific Content and Images saved successfully"
-}
-```
- 
-**Error Response**
-```json
-{
-  "error": "Invalid data format"
-}
-```
- 
----
- 
-## Delete Sales Channel Specific Content
- 
-**Endpoint**  
-`DELETE /api/product/sales-channel-content/{SalesChannelContentId}`
- 
-**Description**  
-Deletes the sales channel-specific content and all related images for the provided SalesChannelContent ID.
- 
-**Request Headers**
-```
-Authorization: Bearer <your-access-token>  
-Content-Type: application/json
-```
- 
-**Example Request**
-```
-DELETE /api/product/sales-channel-content/73f5a9c62d4a4c56aa11cf48d323e0bc
-```
- 
-**Successful Response**
-```json
-{
-  "message": "Sales Channel Specific Content and Images deleted successfully"
-}
-```
- 
-**Error Response**
-```json
-{
-  "error": "Content not found"
-}
-```
- 
----
- 
-## Authentication
- 
-All endpoints require a valid Admin API **Bearer token**.  
-You can obtain this via the standard [Shopware Admin API authentication process](https://developer.shopware.com/docs/resources/api-guide/admin-api/authentication.html).
-
-## 🧑‍💻 Authors
-
-Developed and maintained by [Solution25](https://github.com/solution25com)
-
-## 📄 License
+## License
 
 MIT License
