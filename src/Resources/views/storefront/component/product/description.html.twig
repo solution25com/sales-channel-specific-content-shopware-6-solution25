@@ -1,0 +1,37 @@
+{% sw_extends '@Storefront/storefront/component/product/description.html.twig' %}
+
+{% block component_product_description_content_text %}
+    {{ parent() }}
+
+    {% set customContent = product.extensions.salesChannelSpecificContent ?? null %}
+
+    {% if customContent %}
+        {% if customContent.longDescription %}
+            <div class="product-detail-long-description mt-4">
+                {{ customContent.longDescription|raw }}
+            </div>
+        {% endif %}
+
+        {% if customContent.productFeatures %}
+            <div class="product-detail-features mt-4">
+                <h3 class="product-detail-features-title mb-2">
+                    Product features
+                </h3>
+                <div class="product-detail-features-content">
+                    {{ customContent.productFeatures|raw }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if customContent.whatsIncluded %}
+            <div class="product-detail-included mt-4 mb-4">
+                <h3 class="product-detail-included-title mb-2">
+                    What's included
+                </h3>
+                <div class="product-detail-included-content">
+                    {{ customContent.whatsIncluded|raw }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

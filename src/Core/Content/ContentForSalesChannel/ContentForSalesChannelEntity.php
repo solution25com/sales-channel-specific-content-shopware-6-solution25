@@ -29,9 +29,6 @@ class ContentForSalesChannelEntity extends Entity
     protected ?SalesChannelEntity $salesChannel;
     protected ?MediaEntity $coverImage;
 
-    protected ?float $wholesalePrice;
-    protected ?float $retailPrice;
-
     public function getProductId(): ?string
     {
         return $this->productId;
@@ -170,24 +167,5 @@ class ContentForSalesChannelEntity extends Entity
     public function setCoverImage(?MediaEntity $coverImage): void
     {
         $this->coverImage = $coverImage;
-    }
-    public function getWholesalePrice(): ?float
-    {
-        return $this->wholesalePrice;
-    }
-
-    public function setWholesalePrice(?float $wholesalePrice): void
-    {
-        $this->wholesalePrice = $wholesalePrice;
-    }
-
-    public function getRetailPrice(): ?float
-    {
-        return $this->retailPrice;
-    }
-
-    public function setRetailPrice(?float $retailPrice): void
-    {
-        $this->retailPrice = $retailPrice;
     }
 }

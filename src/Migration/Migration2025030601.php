@@ -5,11 +5,11 @@ namespace SalesChannelSpecificContent\Migration;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Migration\MigrationStep;
 
-class Migration202503060003 extends MigrationStep
+class Migration2025030601 extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 202503060003;
+        return 2025030601;
     }
 
     public function update(Connection $connection): void

@@ -29,8 +29,6 @@ if (!Component.getComponentRegistry().has('sw-product-detail-content')) {
                     shortDescription: '',
                     productUrl: '',
                     whatsIncluded: '',
-                    wholesalePrice: 0.00,
-                    retailPrice: 0.00,
                     coverImageId: null,
                     salesChannelId: null,
                 },
@@ -249,8 +247,6 @@ if (!Component.getComponentRegistry().has('sw-product-detail-content')) {
                     productName: '',
                     productFeatures: '',
                     whatsIncluded: '',
-                    wholesalePrice: 0.00,
-                    retailPrice: 0.00,
                     coverImageId: null,
                     salesChannelSpecificImages: [],
                 };

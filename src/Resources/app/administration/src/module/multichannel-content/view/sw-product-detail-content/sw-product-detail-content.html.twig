@@ -91,23 +91,6 @@
                 </sw-text-editor>
             </template>
         </sw-card>
-        <sw-card title="wholesale & retail Price's">
-            <template #default>
-                <sw-number-field
-                        v-model:value="salesChannelSpecificContent.wholesalePrice"
-                        label="Wholesale Price"
-                        :min="0.01"
-                        step="0.01"
-                    />
-
-                    <sw-number-field
-                        v-model:value="salesChannelSpecificContent.retailPrice"
-                        label="Retail Price"
-                        :min="0.01"
-                        step="0.01"
-                    />
-            </template>
-        </sw-card>
 {# <sw-card title="Media">
     <template #default>
         <sw-media-field 

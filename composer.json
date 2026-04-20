@@ -6,7 +6,10 @@
   "license": "MIT",
   "require": {
     "php": "^7.4 || ^8.0",
-    "shopware/core": "^6.4 || ^6.5 || ^6.6"
+    "shopware/core": "^6.4 || ^6.5 || ^6.6 || ^6.7"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.7"
   },
   "autoload": {
     "psr-4": {
@@ -37,6 +40,23 @@
     "supportLink": {
       "en-GB": "https://solution25.com/en/home_en/",
       "de-DE": "https://solution25.com/"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@enable-prepush"
+    ],
+    "post-update-cmd": [
+      "@enable-prepush"
+    ],
+    "enable-prepush": [
+      "cp ./pre-push .git/hooks/pre-push",
+      "chmod +x .git/hooks/pre-push"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/runtime": true
     }
   }
 }

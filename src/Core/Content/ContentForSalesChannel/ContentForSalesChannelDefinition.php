@@ -17,7 +17,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\FloatField; 
 use Shopware\Core\System\SalesChannel\SalesChannelDefinition;
 
 class ContentForSalesChannelDefinition extends EntityDefinition
@@ -55,10 +54,6 @@ class ContentForSalesChannelDefinition extends EntityDefinition
             (new LongTextField('short_description', 'shortDescription'))->addFlags(new ApiAware(), new AllowHtml()),
             new StringField('product_name', 'productName'),
             new FkField('cover_image_id', 'coverImageId', MediaDefinition::class),
-
-            // Add new price fields
-            (new FloatField('wholesale_price', 'wholesalePrice', 10, 2))->addFlags(new Required(), new ApiAware()),
-            (new FloatField('retail_price', 'retailPrice', 10, 2))->addFlags(new Required(), new ApiAware()),
 
             new ManyToOneAssociationField('product', 'product_id', ProductDefinition::class, 'id', false),
             new ManyToOneAssociationField('salesChannel', 'sales_channel_id', SalesChannelDefinition::class, 'id', false),

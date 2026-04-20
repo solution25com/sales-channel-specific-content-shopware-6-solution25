@@ -1,0 +1,23 @@
+{
+  "base": "/bundles/saleschannelspecificcontent/administration/",
+  "entryPoints": {
+    "sales-channel-specific-content": {
+      "css": [],
+      "dynamic": [],
+      "js": [
+        "/bundles/saleschannelspecificcontent/administration/assets/sales-channel-specific-content-wsgkFKDt.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}
