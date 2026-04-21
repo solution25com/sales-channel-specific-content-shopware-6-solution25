@@ -25,7 +25,7 @@
 
         <service id="SalesChannelSpecificContent\Decorator\ProductDetailRouteDecorator" decorates="Shopware\Core\Content\Product\SalesChannel\Detail\ProductDetailRoute">
             <argument type="service" id="SalesChannelSpecificContent\Decorator\ProductDetailRouteDecorator.inner"/>
-            <argument type="service" id="sales_channel_specific_content.repository"/>
+            <argument type="service" id="SalesChannelSpecificContent\Subscriber\ProductSalesChannelContentSubscriber"/>
             <tag name="shopware.sales_channel.route"/>
         </service>
     </services>

@@ -27,7 +27,6 @@ if (!Component.getComponentRegistry().has('sw-product-detail-content')) {
                     productName: '',
                     productFeatures: "",
                     shortDescription: '',
-                    productUrl: '',
                     whatsIncluded: '',
                     coverImageId: null,
                     salesChannelId: null,
@@ -130,6 +129,22 @@ if (!Component.getComponentRegistry().has('sw-product-detail-content')) {
                 try {
                     let entity;
 
+                    if (!this.hasSalesChannelSpecificContent()) {
+                        if (this.salesChannelSpecificContent.id) {
+                            await this.salesChannelContentRepository.delete(this.salesChannelSpecificContent.id, Shopware.Context.api);
+                        }
+
+                        this.salesChannelSpecificContent = this.getEmptyContent(this.selectedSalesChannel);
+                        this.salesChannelImages = [];
+
+                        this.createNotificationSuccess({
+                            title: 'Success',
+                            message: 'Sales channel content removed successfully.',
+                        });
+
+                        return;
+                    }
+
                     if (this.salesChannelSpecificContent.id) {
                         entity = await this.salesChannelContentRepository.get(this.salesChannelSpecificContent.id, Shopware.Context.api);
                         Object.assign(entity, this.salesChannelSpecificContent);
@@ -197,6 +212,40 @@ if (!Component.getComponentRegistry().has('sw-product-detail-content')) {
                 }
             },
 
+            hasSalesChannelSpecificContent() {
+                const fields = [
+                    'longDescription',
+                    'metaDescription',
+                    'metaTitle',
+                    'metaKeywords',
+                    'productName',
+                    'productFeatures',
+                    'shortDescription',
+                    'whatsIncluded',
+                    'coverImageId',
+                ];
+
+                return fields.some((field) => this.hasContentValue(this.salesChannelSpecificContent[field]))
+                    || this.salesChannelImages.length > 0;
+            },
+
+            hasContentValue(value) {
+                if (value === null || value === undefined) {
+                    return false;
+                }
+
+                if (typeof value !== 'string') {
+                    return true;
+                }
+
+                const normalizedValue = value
+                    .replace(/<[^>]*>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .trim();
+
+                return normalizedValue.length > 0;
+            },
+
             updateSalesChannelContent() {
                 const selectedContent = this.salesChannelData.find(
                     item => String(item.salesChannelId) === String(this.selectedSalesChannel)
@@ -224,7 +273,6 @@ if (!Component.getComponentRegistry().has('sw-product-detail-content')) {
 
                 this.selectedSalesChannel = salesChannelId;
                 this.salesChannelSpecificContent.salesChannelId = salesChannelId;
-                this.salesChannelSpecificContent.id = salesChannelId;
 
                 if (salesChannelId) {
                     console.log("Fetching content for Sales Channel ID:", salesChannelId);

@@ -2,25 +2,22 @@
 
 namespace SalesChannelSpecificContent\Decorator;
 
+use SalesChannelSpecificContent\Subscriber\ProductSalesChannelContentSubscriber;
 use Shopware\Core\Content\Product\SalesChannel\Detail\AbstractProductDetailRoute;
-use Shopware\Core\Content\Product\SalesChannel\Detail\ProductDetailRoute;
 use Shopware\Core\Content\Product\SalesChannel\Detail\ProductDetailRouteResponse;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductDetailRouteDecorator extends AbstractProductDetailRoute
 {
     private AbstractProductDetailRoute $decorated;
-    private EntityRepository $contentRepository;
+    private ProductSalesChannelContentSubscriber $contentSubscriber;
 
-    public function __construct(AbstractProductDetailRoute $decorated, EntityRepository $contentRepository)
+    public function __construct(AbstractProductDetailRoute $decorated, ProductSalesChannelContentSubscriber $contentSubscriber)
     {
         $this->decorated = $decorated;
-        $this->contentRepository = $contentRepository;
+        $this->contentSubscriber = $contentSubscriber;
     }
 
     public function getDecorated(): AbstractProductDetailRoute
@@ -32,26 +29,18 @@ class ProductDetailRouteDecorator extends AbstractProductDetailRoute
         $response = $this->decorated->load($productId, $request, $context, $criteria);
 
         $product = $response->getProduct();
-        $productId = $product->getParentId() ?? $product->getId();
+        $customContent = $this->contentSubscriber->getSalesChannelContentWithFallback(
+            $product->getId(),
+            $product->getParentId(),
+            $context->getSalesChannelId(),
+            $context->getContext()
+        );
 
-        $customCriteria = new Criteria();
-        $customCriteria->addFilter(new EqualsFilter('salesChannelId', $context->getSalesChannelId()));
-        $customCriteria->addFilter(new EqualsFilter('productId', $productId));
-
-        $customContent = $this->contentRepository->search($customCriteria, $context->getContext())->first();
-
-        if ($customContent !== null) {
-            $product->setTranslated(array_merge(
-                $product->getTranslated(),
-                [
-                    'name' => $customContent->get('metaTitle'),
-                    'description' => $customContent->get('shortDescription') ?? '',
-                    'metaTitle' => $customContent->get('metaTitle'),
-                    'metaDescription' => $customContent->get('metaDescription'),
-                    'metaKeywords' => $customContent->get('metaKeywords'),
-                ]
-            ));
+        if ($customContent === null) {
+            return $response;
         }
+
+        $this->contentSubscriber->applyToProduct($product, $customContent);
 
         return $response;
     }

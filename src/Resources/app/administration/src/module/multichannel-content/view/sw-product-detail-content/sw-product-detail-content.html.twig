@@ -15,11 +15,21 @@
     </template>
 </sw-card>
 
-<sw-card title="Long Description">
+<sw-card title="Product Details">
     <template #default>
-        <sw-text-editor 
-            label="Long Description" 
-            v-model:value="salesChannelSpecificContent.longDescription" 
+        <sw-text-field
+            label="Product Name"
+            v-model:value="salesChannelSpecificContent.productName"
+            placeholder="Enter product name"
+        />
+    </template>
+</sw-card>
+
+<sw-card title="Description">
+    <template #default>
+        <sw-text-editor
+            label="Long Description"
+            v-model:value="salesChannelSpecificContent.longDescription"
             :enablehtml="true"
             :sanitize-input="false"
             >
@@ -32,65 +42,47 @@
     </template>
 </sw-card>
 
-<sw-card title="Product Details">
+<sw-card title="Additional Information">
     <template #default>
-        <sw-container columns="2">
-            <sw-text-field 
-                label="Product Name" 
-                v-model:value="salesChannelSpecificContent.productName" 
-                placeholder="Enter product name"
-            />
+        <sw-text-editor
+            label="What's Included"
+            v-model:value="salesChannelSpecificContent.whatsIncluded"
+            placeholder="List included items"
+            :enablehtml="true"
+            :sanitize-input="false"
+        >
+        </sw-text-editor>
 
-            <sw-text-field 
-                label="Product URL" 
-                v-model:value="salesChannelSpecificContent.productUrl" 
-                placeholder="Enter product URL"
-            />
-        </sw-container>
+        <sw-text-editor
+            v-model:value="salesChannelSpecificContent.productFeatures"
+            label="Product Features"
+            placeholder="Add product features...">
+        </sw-text-editor>
     </template>
 </sw-card>
 
 <sw-card title="SEO Information">
     <template #default>
         <sw-container columns="2">
-            <sw-text-field 
-                label="SEO Title" 
-                v-model:value="salesChannelSpecificContent.metaTitle" 
+            <sw-text-field
+                label="SEO Title"
+                v-model:value="salesChannelSpecificContent.metaTitle"
                 placeholder="Enter meta title"
             />
 
-            <sw-text-field 
-                label="SEO Keywords" 
-                v-model:value="salesChannelSpecificContent.metaKeywords" 
+            <sw-text-field
+                label="SEO Keywords"
+                v-model:value="salesChannelSpecificContent.metaKeywords"
                 placeholder="Enter meta keywords"
             />
-            <sw-text-editor 
-                label="SEO Description" 
-                v-model:value="salesChannelSpecificContent.metaDescription" 
+            <sw-text-editor
+                label="SEO Description"
+                v-model:value="salesChannelSpecificContent.metaDescription"
                 :enablehtml="true"
                 />
         </sw-container>
     </template>
 </sw-card>
-
-        <sw-card title="Additional Information">
-            <template #default>
-                <sw-text-editor 
-                    label="What's Included" 
-                    v-model:value="salesChannelSpecificContent.whatsIncluded" 
-                    placeholder="List included items"
-                    :enablehtml="true"
-                    :sanitize-input="false"
-                >
-                </sw-text-editor>
-
-                <sw-text-editor 
-                    v-model:value="salesChannelSpecificContent.productFeatures" 
-                    label="Product Features"
-                    placeholder="Add product features...">
-                </sw-text-editor>
-            </template>
-        </sw-card>
 {# <sw-card title="Media">
     <template #default>
         <sw-media-field 
